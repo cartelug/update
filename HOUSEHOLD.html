@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Household Manager</title>
+    <style>
+        /* Page styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .status {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Netflix Household Manager</h1>
+        <form id="netflixForm">
+            <!-- Dropdown for selecting Netflix account -->
+            <label for="netflixEmail">Select Netflix Account Email:</label>
+            <select id="netflixEmail" name="netflixEmail" required>
+                <option value="" disabled selected>Select your account</option>
+                <option value="cartelug1@outlook.com">cartelug1@outlook.com</option>
+                <option value="cartelug2@outlook.com">cartelug2@outlook.com</option>
+                <option value="cartelug3@outlook.com">cartelug3@outlook.com</option>
+                <option value="cartelug4@outlook.com">cartelug4@outlook.com</option>
+                <option value="cartelug5@outlook.com">cartelug5@outlook.com</option>
+                <option value="cartelug6@outlook.com">cartelug6@outlook.com</option>
+                <option value="cartelug7@outlook.com">cartelug7@outlook.com</option>
+                <option value="cartelug8@outlook.com">cartelug8@outlook.com</option>
+                <option value="cartelug9@outlook.com">cartelug9@outlook.com</option>
+                <option value="cartelug10@outlook.com">cartelug10@outlook.com</option>
+                <option value="cartelug11@outlook.com">cartelug11@outlook.com</option>
+                <option value="cartelug12@outlook.com">cartelug12@outlook.com</option>
+                <option value="cartelug13@outlook.com">cartelug13@outlook.com</option>
+                <option value="cartelug14@outlook.com">cartelug14@outlook.com</option>
+                <option value="cartelug15@outlook.com">cartelug15@outlook.com</option>
+                <option value="cartelug16@outlook.com">cartelug16@outlook.com</option>
+            </select>
+
+            <!-- Input for client's personal email -->
+            <label for="personalEmail">Enter Your Personal Email:</label>
+            <input type="email" id="personalEmail" name="personalEmail" placeholder="Your email address" required />
+
+            <!-- Submit button -->
+            <button type="submit">Send Household Email</button>
+        </form>
+        <div id="statusMessage" class="status"></div>
+    </div>
+
+    <script>
+        // JavaScript to handle form submission
+        document.getElementById("netflixForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const netflixEmail = document.getElementById("netflixEmail").value;
+            const personalEmail = document.getElementById("personalEmail").value;
+            const statusMessage = document.getElementById("statusMessage");
+
+            // Show a loading message
+            statusMessage.textContent = "Processing your request...";
+
+            try {
+                // Send data to Zapier Webhook
+                const response = await fetch("https://hook.eu2.make.com/5n4h82gwyovfnw8ghc0jkc9ecn2qfoit/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ netflixEmail, personalEmail }),
+                });
+
+                if (response.ok) {
+                    // Success message
+                    statusMessage.textContent = "Success! Check your personal email for further instructions.";
+                } else {
+                    // Failure message
+                    statusMessage.textContent = "Failed to process your request. Please try again.";
+                }
+            } catch (error) {
+                // Error message
+                statusMessage.textContent = "An error occurred. Please try again later.";
+            }
+        });
+    </script>
+</body>
+</html>
